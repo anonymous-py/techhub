@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="row justify-content-center my-5">
+  <div class="col-md-5">
+    <div class="card p-4 shadow-lg" style="background-color: var(--black); border-radius: 15px;">
+      <h3 class="fw-bold mb-4 text-warning text-center" style="text-shadow: 0 0 8px var(--yellow);">Login</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-yellow w-100 mt-3" style="border-radius: 25px; font-weight: 600; transition: all 0.3s ease;">
+          Login
+        </button>
+      </form>
+      <p class="text-center mt-3 text-light">
+        Don’t have an account? 
+        <a href="{% url 'register' %}" class="text-warning" style="text-decoration: underline;">Register</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  input[type="text"], input[type="password"], input[type="email"] {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    border: 1px solid var(--yellow);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    transition: all 0.3s ease;
+  }
+  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-color: #ffd83a;
+    box-shadow: 0 0 8px var(--yellow);
+    outline: none;
+  }
+  label {
+    color: var(--light-gray);
+    font-weight: 500;
+  }
+  .btn-yellow:hover {
+    background-color: #ffd83a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(247,198,0,0.4);
+  }
+</style>
+{% endblock %}

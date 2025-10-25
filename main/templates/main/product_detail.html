@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="row align-items-center">
+  <div class="col-md-6">
+    <img src="{{ product.pic.url }}" class="img-fluid rounded shadow">
+  </div>
+  <div class="col-md-6">
+    <h2 class="text-warning">{{ product.name }}</h2>
+    <p class="text-light">{{ product.description }}</p>
+    <h4 class="fw-bold">${{ product.price }}</h4>
+    {% if product.available %}
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-yellow mt-3">Add to Cart</a>
+    {% else %}
+      <p class="text-danger mt-3">Out of stock</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

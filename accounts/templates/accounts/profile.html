@@ -1,0 +1,9 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="text-center">
+  <img src="{{ user.picture.url }}" class="rounded-circle mb-3" width="120" height="120" style="object-fit:cover;">
+  <h4 class="text-warning">{{ user.full_name }}</h4>
+  <p class="text-light">{{ user.email }}</p>
+  <a href="{% url 'edit_profile' %}" class="btn btn-yellow mt-3">Edit Profile</a>
+</div>
+{% endblock %}

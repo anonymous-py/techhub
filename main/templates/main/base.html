@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tech Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --primary: #FFC107;
+    --primary-dark: #FFA000;
+    --black: #121212;
+    --dark-gray: #1E1E1E;
+    --medium-gray: #2D2D2D;
+    --light-gray: #B0B0B0;
+    --white: #FFFFFF;
+    --text-light: #E0E0E0;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+  }
+
+  body {
+    background: var(--dark-gray);
+    color: var(--text-light);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .techhub-nav {
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+  }
+
+  .logo { 
+    font-size: 1.6rem; 
+    font-weight: 700; 
+    color: var(--primary); 
+  }
+  .logo span { color: var(--white); font-weight: 300; }
+
+  .nav-item { 
+    color: var(--text-light); 
+    font-weight: 500; 
+    position: relative; 
+    transition: var(--transition);
+  }
+  .nav-item::after { 
+    content: ""; 
+    position: absolute; 
+    left: 0; 
+    bottom: -4px; 
+    height: 2px; 
+    width: 0%; 
+    background: var(--primary); 
+    transition: var(--transition); 
+  }
+  .nav-item:hover { color: var(--primary); }
+  .nav-item:hover::after { width: 100%; }
+
+  .search-bar { 
+    border: 1px solid rgba(255, 193, 7, 0.3); 
+    border-radius: 25px; 
+    overflow: hidden; 
+    background: rgba(30, 30, 30, 0.7);
+  }
+  .search-bar input { 
+    background: transparent; 
+    border: none; 
+    color: var(--text-light); 
+    padding: 0.5rem 1rem; 
+    outline: none; 
+  }
+  .search-bar button { 
+    background: var(--primary); 
+    border: none; 
+    color: var(--black); 
+    padding: 0.5rem 1rem; 
+    cursor: pointer; 
+  }
+
+  .btn-yellow {
+    background: var(--primary);
+    color: var(--black);
+    border: none;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+  }
+  .btn-yellow:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .category-tabs {
+    background: var(--black);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    position: sticky;
+    top: 70px;
+    z-index: 999;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .category-tabs a {
+    color: var(--light-gray);
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    transition: var(--transition);
+  }
+  .category-tabs a:hover { color: var(--black); background: var(--primary); }
+  .category-tabs a.active { color: var(--black); background: var(--primary); }
+
+  .product-card {
+    background: var(--medium-gray);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+  .product-card:hover img { transform: scale(1.05); }
+
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--primary);
+    color: var(--black);
+    padding: 0.3rem 0.7rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .btn-add-cart {
+    background: var(--primary);
+    color: var(--black);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-weight: 600;
+    transition: var(--transition);
+    width: 100%;
+  }
+  .btn-add-cart:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    background: var(--black);
+    color: var(--light-gray);
+    padding: 3rem 0 1rem;
+    border-top: 2px solid var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { 
+      display: none; 
+      flex-direction: column; 
+      background: rgba(18, 18, 18, 0.98); 
+      position: absolute; 
+      top: 100%; 
+      right: 0; 
+      width: 250px; 
+      padding: 1rem; 
+    }
+    .nav-links.active { display: flex; }
+    .hamburger { display: flex; }
+    .category-tabs { flex-wrap: wrap; }
+  }
+  </style>
+</head>
+<body>
+<nav class="techhub-nav">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between py-2">
+      <a href="/" class="logo">Tech<span>Hub</span></a>
+
+      <div class="nav-links d-flex gap-4" id="navLinks">
+        <a href="/" class="nav-item active">Home</a>
+        <a href="/#products" class="nav-item">Products</a>
+        <a href="{% url 'about' %}" class="nav-item">About</a>
+        <a href="{% url 'contact' %}" class="nav-item">Contact</a>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <form method="get" action="/" class="search-bar d-flex">
+          <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q|default:'' }}">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'cart' %}" class="text-light"><i class="fa fa-shopping-cart"></i></a>
+        <a href="{% url 'profile' %}" class="text-light"><i class="fa fa-user"></i></a>
+        <a href="{% url 'logout' %}" class="btn-yellow small">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn-yellow small">Login</a>
+        {% endif %}
+
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+{% if categories %}
+<div class="category-tabs">
+  <a href="/" class="{% if not request.GET.category %}active{% endif %}">All</a>
+  {% for c in categories %}
+    <a href="/?category={{ c.id }}" class="{% if request.GET.category|default:'' == c.id|stringformat:"s" %}active{% endif %}">
+      {{ c.name }}
+    </a>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main class="container my-5">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+
+  
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="footer-logo mb-3">Tech<span>Hub</span></div>
+        <p>Your premier destination for cutting-edge technology and gadgets.</p>
+      </div>
+      <div class="col-md-2">
+        <h6 class="fw-bold mb-3">Links</h6>
+        <a href="/" class="d-block mb-2">Home</a>
+        <a href="{% url 'about' %}" class="d-block mb-2">About</a>
+        <a href="{% url 'contact' %}" class="d-block">Contact</a>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3">Contact</h6>
+        <p class="mb-1">support@techhub.com</p>
+        <p>0509480236</p>
+      </div>
+    </div>
+    <div class="text-center mt-4 pt-3 border-top border-secondary">
+      &copy; {{ now|date:"Y" }} Tech Hub. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const burger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  
+  burger.addEventListener('click', function() {
+    navLinks.classList.toggle('active');
+  });
+});
+</script>
+</body>
+</html>
