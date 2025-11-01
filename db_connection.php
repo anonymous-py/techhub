@@ -1,26 +1,35 @@
 <?php
 class Database {
-    private $host = "localhost";      // Your database host (usually 'localhost')
-    private $db_name = "tech_hub_db"; // Your database name
-    private $username = "your_username";  // Your database username
-    private $password = "your_password";  // Your database password
-    public $conn;
+    private $conn;
 
     public function getConnection() {
-        $this->conn = null;
+        if ($this->conn) {
+            return $this->conn;
+        }
+
+        // Get credentials from environment variables
+        $host = getenv('DB_HOST');     
+        $port = getenv('DB_PORT');     
+        $db   = getenv('DB_NAME');     
+        $user = getenv('DB_USER');     
+        $pass = getenv('DB_PASS');      
+
         try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4", $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        } catch(PDOException $exception) {
-            error_log("Connection error: " . $e->getMessage());
+            $this->conn = new PDO(
+                "pgsql:host=$host;port=$port;dbname=$db",
+                $user,
+                $pass,
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+        } catch (PDOException $e) {
+            error_log("Database connection error: " . $e->getMessage());
             die("Database connection failed. Please try again later.");
         }
+
         return $this->conn;
     }
 }
- 
-// Create database connection
+
+// Use require_once when including this file elsewhere
 $database = new Database();
 $pdo = $database->getConnection();
