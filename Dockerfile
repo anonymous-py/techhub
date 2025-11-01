@@ -2,7 +2,9 @@
 FROM php:8.2-apache
 
 # Install PHP extensions for PostgreSQL and tools
-RUN apt-get update && apt-get install -y zip unzip git \
+RUN apt-get update && apt-get install -y \
+    zip unzip git \
+    libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql
 
 # Set working directory
@@ -14,7 +16,7 @@ COPY . .
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Apache uses Render's dynamic port at runtime
+# Let Apache use Render's dynamic port
 ENV APACHE_RUN_PORT=$PORT
 
 # Expose default port
