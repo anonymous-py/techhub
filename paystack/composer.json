@@ -1,0 +1,6 @@
+{
+    "require": {
+        "yabacon/paystack-php": "^2.2",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
