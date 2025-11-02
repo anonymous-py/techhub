@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php'; // Composer autoload for phpdotenv
+require_once __DIR__ . '/paystack/vendor/autoload.php';// Composer autoload for phpdotenv
 use Dotenv\Dotenv;
 
 if (!class_exists('Database')) {
