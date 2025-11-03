@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';// Composer autoload for phpdotenv
+require_once __DIR__ . '/vendor/autoload.php'; // Composer autoload for phpdotenv
 use Dotenv\Dotenv;
 
 if (!class_exists('Database')) {
@@ -11,28 +11,30 @@ if (!class_exists('Database')) {
                 return $this->conn;
             }
 
-            // Load .env for local development
-            if (file_exists(__DIR__ . '/.env')) {
-                $dotenv = Dotenv::createImmutable(__DIR__);
+            // Load environment variables (local or production)
+            $envPath = __DIR__;
+            if (file_exists($envPath . '/.env')) {
+                $dotenv = Dotenv::createImmutable($envPath);
                 $dotenv->load();
             }
 
             $host = getenv('DB_HOST') ?: 'localhost';
-            $port = getenv('DB_PORT') ?: 5432;
+            $port = getenv('DB_PORT') ?: '5432';
             $db   = getenv('DB_NAME') ?: 'techhub_db';
             $user = getenv('DB_USER') ?: 'root';
             $pass = getenv('DB_PASS') ?: '';
 
             try {
                 $this->conn = new PDO(
-                    "pgsql:host=$host;port=$port;dbname=$db",
+                    "pgsql:host={$host};port={$port};dbname={$db}",
                     $user,
                     $pass,
                     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
                 );
             } catch (PDOException $e) {
+                // Log error silently to Render logs
                 error_log("Database connection error: " . $e->getMessage());
-                die("Database connection failed. Please try again later.");
+                $this->conn = null;
             }
 
             return $this->conn;
@@ -42,4 +44,4 @@ if (!class_exists('Database')) {
 
 // Initialize connection
 $database = new Database();
-$pdo = $database->getConnection();
+$db = $database->getConnection();
