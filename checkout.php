@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once 'includes/db_connection.php';
+require_once __DIR__ . '/db_connection.php';
+
 require_once 'includes/functions.php';
 
 // Require login
